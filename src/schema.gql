@@ -1,0 +1,154 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type PageDataDto {
+  count: Float!
+  limit: Float!
+  offset: Float!
+}
+
+type Article {
+  name: String!
+  slug: String!
+  mark: String!
+  inStock: Float!
+  price: Float!
+  discountPrice: Float!
+  description: String!
+  route: String!
+  featured: Featured!
+  details: Detail!
+  specs: [SpecsProduct!]!
+  tags: [TagsProduct!]!
+  image: [ImageProduct!]
+  seo: Seo!
+}
+
+type Featured {
+  name: String!
+  href: String!
+}
+
+type Detail {
+  material: String!
+  color: String!
+  finishing: String!
+  logo: String!
+  accessories: String!
+  dimensions: [String!]!
+}
+
+type Image {
+  uid: String!
+  src: String!
+  alt: String!
+}
+
+type ImageProduct {
+  uid: String!
+  src: String!
+  alt: String!
+}
+
+type Seo {
+  name: String!
+  href: String!
+  description: String!
+  icon: Image!
+  image: Image!
+}
+
+type TagsProduct {
+  uid: String!
+  text: String!
+}
+
+type SpecsProduct {
+  uid: String!
+  text: String!
+}
+
+type Furniture {
+  _id: ID!
+  article: Article!
+  site: String!
+  status: Boolean
+}
+
+type Query {
+  furniture(_id: ID!): Furniture!
+  furnitures(site: String!): [Furniture!]!
+}
+
+type Mutation {
+  addFurniture(input: CreateProductInput!): Furniture!
+  updateFurniture(_id: ID!, input: UpdateProductInput!): Furniture!
+  removeFurniture(_id: ID!): String!
+  removeFurnituries(site: String!): String!
+  updateImagesFurniture(_id: ID!, input: [UpdateImagesInput!]!): Furniture!
+  updateSpecsFurniture(_id: ID!, input: [UpdateSpecsInput!]!): Furniture!
+  updateTagsFurniture(_id: ID!, input: [UpdateTagsInput!]!): Furniture!
+  updateDetailsFurniture(_id: ID!, input: UpdateDetailsInput!): Furniture!
+  updateColorsFurniture(_id: ID!, input: UpdateColorsInput!): Furniture!
+  updateSizesFurniture(_id: ID!, input: UpdateSizesInput!): Furniture!
+}
+
+input CreateProductInput {
+  name: String!
+  mark: String!
+  description: String!
+  featured: String!
+  inStock: Float!
+  price: Float!
+  discountPrice: Float!
+  site: String!
+  route: String!
+}
+
+input UpdateProductInput {
+  name: String
+  mark: String
+  description: String
+  featured: String
+  inStock: Float
+  price: Float
+  discountPrice: Float
+  site: String
+  route: String
+}
+
+input UpdateImagesInput {
+  src: String!
+  alt: String!
+}
+
+input UpdateSpecsInput {
+  text: String!
+}
+
+input UpdateTagsInput {
+  text: String
+}
+
+input UpdateDetailsInput {
+  material: String!
+  color: String!
+  finishing: String!
+  logo: String!
+  accessories: String!
+  dimensions: [String!]!
+}
+
+input UpdateColorsInput {
+  name: String
+  class: String
+  selectedClass: String
+  id: ID!
+}
+
+input UpdateSizesInput {
+  name: String
+  inStock: Float
+  id: ID!
+}
