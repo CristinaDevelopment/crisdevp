@@ -90,6 +90,20 @@ type Gift {
   status: Boolean
 }
 
+type Jeweler {
+  _id: ID!
+  article: Article!
+  site: String!
+  status: Boolean
+}
+
+type Teddy {
+  _id: ID!
+  article: Article!
+  site: String!
+  status: Boolean
+}
+
 type Query {
   clothing(_id: ID!): Clothing!
   clothings(site: String!): [Clothing!]!
@@ -99,6 +113,12 @@ type Query {
   furniture(_id: ID!): Furniture!
   furnitureBySlug(slug: String!): Furniture!
   furnitures(site: String!): [Furniture!]!
+  jeweler(_id: ID!): Jeweler!
+  jewelerBySlug(slug: String!): Jeweler!
+  jewelers(site: String!): [Jeweler!]!
+  teddy(_id: ID!): Teddy!
+  teddyBySlug(slug: String!): Teddy!
+  teddys(site: String!): [Teddy!]!
 }
 
 type Mutation {
@@ -130,6 +150,24 @@ type Mutation {
   updateDetailsFurniture(_id: ID!, input: UpdateDetailsInput!): Furniture!
   updateColorsFurniture(_id: ID!, input: UpdateColorsInput!): Furniture!
   updateSizesFurniture(_id: ID!, input: UpdateSizesInput!): Furniture!
+  addJeweler(input: CreateProductInput!): Jeweler!
+  updateJeweler(_id: ID!, input: UpdateProductInput!): Jeweler!
+  removeJeweler(_id: ID!): String!
+  updateImagesJeweler(_id: ID!, input: [UpdateImagesInput!]!): Jeweler!
+  updateSpecsJeweler(_id: ID!, input: [UpdateSpecsInput!]!): Jeweler!
+  updateTagsJeweler(_id: ID!, input: [UpdateTagsInput!]!): Jeweler!
+  updateDetailsJeweler(_id: ID!, input: UpdateDetailsInput!): Jeweler!
+  updateColorsJeweler(_id: ID!, input: UpdateColorsInput!): Jeweler!
+  updateSizesJeweler(_id: ID!, input: UpdateSizesInput!): Jeweler!
+  addTeddy(input: CreateProductInput!): Teddy!
+  updateTeddy(_id: ID!, input: UpdateProductInput!): Teddy!
+  removeTeddy(_id: ID!): String!
+  updateImagesTeddy(_id: ID!, input: [UpdateImagesInput!]!): Teddy!
+  updateSpecsTeddy(_id: ID!, input: [UpdateSpecsInput!]!): Teddy!
+  updateTagsTeddy(_id: ID!, input: [UpdateTagsInput!]!): Teddy!
+  updateDetailsTeddy(_id: ID!, input: UpdateDetailsInput!): Teddy!
+  updateColorsTeddy(_id: ID!, input: UpdateColorsInput!): Teddy!
+  updateSizesTeddy(_id: ID!, input: UpdateSizesInput!): Teddy!
 }
 
 input CreateProductInput {

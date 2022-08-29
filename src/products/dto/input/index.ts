@@ -1,6 +1,7 @@
 export * from './clothing.input'
 export * from './furniture.input'
 export * from './gift.input'
+export * from './teddy.input'
 // export * from './hardware.input'
 // export * from './homeAppliance.input'
 export * from './product.input'

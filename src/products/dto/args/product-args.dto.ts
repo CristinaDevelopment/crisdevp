@@ -37,3 +37,7 @@ export class GetHardwareArgs extends GetProductArgs {}
 export class GetWearArgs extends GetProductArgs {}
 @ArgsType()
 export class GetGiftArgs extends GetProductArgs {}
+@ArgsType()
+export class GetJewelerArgs extends GetProductArgs {}
+@ArgsType()
+export class GetTeddyArgs extends GetProductArgs {}

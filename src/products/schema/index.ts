@@ -1,4 +1,6 @@
 export * from './clothing.schema'
 export * from './furniture.schema'
 export * from './gift.schema'
+export * from './jeweler.schema'
+export * from './teddy.schema'
 export * from './product.schema'
