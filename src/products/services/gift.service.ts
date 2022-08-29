@@ -18,125 +18,107 @@ import {
   UpdateDetailsInput,
 } from '../dto/input';
 import { ListInput } from '../dto/list.dto';
-import { Furniture } from '../model/furniture.model';
-import { FurnitureRepository } from '../repositories/furniture.repository';
-import { FurnitureDocument } from '../schema';
+import { Gift } from '../model/gift.model';
+import { GiftRepository } from '../repositories/gift.repository';
+import { GiftDocument } from '../schema';
 
 @Injectable()
-export class FurnitureService {
-  constructor(private readonly furnitureRepository: FurnitureRepository) {}
+export class GiftService {
+  constructor(private readonly giftRepository: GiftRepository) {}
 
-  async createFurniture(input: CreateProductInput) {
+  async createGift(input: CreateProductInput) {
     await this.validateSlug(input);
-    const data = await this.furnitureRepository.createProduct(input);
+    const data = await this.giftRepository.createProduct(input);
     return this.toModel(data);
   }
 
-  async updateFurniture(id: GetProductArgs, input: UpdateProductInput) {
+  async updateGift(id: GetProductArgs, input: UpdateProductInput) {
     await this.validateProduct(id);
-    const data = await this.furnitureRepository.findOneProductAndUpdate(
-      id,
-      input,
-    );
+    const data = await this.giftRepository.findOneProductAndUpdate(id, input);
     return this.toModel(data);
   }
 
-  // async updateFurnitures(site: GetSiteArgs, input: UpdateFurnituresInput) {
-  //   const data = await this.furnitureRepository.updateMany(site, input);
+  // async updateGifts(site: GetSiteArgs, input: UpdateGiftsInput) {
+  //   const data = await this.giftRepository.updateMany(site, input);
   //   return data;
   // }
 
-  async removeFurniture(id: GetProductArgs) {
+  async removeGift(id: GetProductArgs) {
     await this.validateProduct(id);
-    await this.furnitureRepository.removeProduct(id);
+    await this.giftRepository.removeProduct(id);
     return 'producto elmininado';
   }
 
-  async removeFurnitures(site: GetSiteArgs) {
+  async removeGifts(site: GetSiteArgs) {
     await this.validateProducts(site);
 
-    await this.furnitureRepository.removeProducts(site);
+    await this.giftRepository.removeProducts(site);
     return 'productos elmininados';
   }
 
-  async getFurniture(id: GetProductArgs) {
-    const furnitureDocument = await this.furnitureRepository.getProduct({
+  async getGift(id: GetProductArgs) {
+    const giftDocument = await this.giftRepository.getProduct({
       ...id,
       status: true,
     });
-    return this.toModel(furnitureDocument);
+    return this.toModel(giftDocument);
   }
-  async getFurnitureBySlug(slug: string) {
-    const furnitureDocument = await this.furnitureRepository.getProduct({
+  async getGiftBySlug(slug: string) {
+    const giftDocument = await this.giftRepository.getProduct({
       'article.slug': slug,
       status: true,
     });
-    return this.toModel(furnitureDocument);
+    return this.toModel(giftDocument);
   }
 
-  async getFurnitures(site: GetSiteArgs) {
-    return await this.furnitureRepository.getProductsSort({
+  async getGifts(site: GetSiteArgs) {
+    return await this.giftRepository.getProductsSort({
       ...site,
       status: true,
     });
   }
 
   findAllProducts(input: ListInput, site: string) {
-    return this.furnitureRepository.findAll(
-      { status: true, site: site },
-      input,
-    );
+    return this.giftRepository.findAll({ status: true, site: site }, input);
   }
   findAllProductsByPagination(input: ListInput, site: string) {
-    return this.furnitureRepository.findAllPagination(
+    return this.giftRepository.findAllPagination(
       { status: true, site: site },
       input,
     );
   }
 
   // async addSpecs(id: GetProductArgs, input: AddSpecsInput) {
-  //   const data = await this.furnitureRepository.addProductSpecs(id, input);
+  //   const data = await this.giftRepository.addProductSpecs(id, input);
   //   return this.toModel(data);
   // }
 
   async updateImages(id: GetProductArgs, input: UpdateImagesInput[]) {
-    const document = await this.furnitureRepository.updateImageProduct(
-      id,
-      input,
-    );
+    const document = await this.giftRepository.updateImageProduct(id, input);
     return document;
   }
 
   async updateTags(id: GetProductArgs, input: UpdateTagsInput[]) {
-    const document = await this.furnitureRepository.updateTagsProduct(
-      id,
-      input,
-    );
+    const document = await this.giftRepository.updateTagsProduct(id, input);
     return document;
   }
   async updateSpecs(id: GetProductArgs, input: UpdateSpecsInput[]) {
-    const document = await this.furnitureRepository.updateSpecsProduct(
-      id,
-      input,
-    );
+    const document = await this.giftRepository.updateSpecsProduct(id, input);
     return document;
   }
   async updateDetails(id: GetProductArgs, input: UpdateDetailsInput) {
-    const document = await this.furnitureRepository.updateDetailsProduct(
-      id,
-      input,
-    );
+    const document = await this.giftRepository.updateDetailsProduct(id, input);
     return document;
   }
 
   //TODO: articleType
 
   // async addColors(id: GetProductArgs, input: AddColorsInput) {
-  //   const document = await this.furnitureRepository.addProductColors(id, input);
+  //   const document = await this.giftRepository.addProductColors(id, input);
   //   return document;
   // }
   async updateColors(id: GetProductArgs, input: UpdateColorsInput) {
-    const document = await this.furnitureRepository.updateProductColors(
+    const document = await this.giftRepository.updateProductColors(
       {
         _id: id,
         ['articleType.colors.id']: input.id,
@@ -147,11 +129,11 @@ export class FurnitureService {
   }
 
   // async addSizes(id: GetProductArgs, input: AddSizesInput) {
-  //   const document = await this.furnitureRepository.addProductSizes(id, input);
+  //   const document = await this.giftRepository.addProductSizes(id, input);
   //   return document;
   // }
   async updateSizes(id: GetProductArgs, input: UpdateSizesInput) {
-    const document = await this.furnitureRepository.updateProductSizes(
+    const document = await this.giftRepository.updateProductSizes(
       {
         _id: id,
         ['articleType.sizes.id']: input.id,
@@ -164,7 +146,7 @@ export class FurnitureService {
   //TODO: articleType
 
   private async validateProduct(id: GetProductArgs) {
-    const data = await this.furnitureRepository.getProducts({
+    const data = await this.giftRepository.getProducts({
       _id: id._id,
       status: true,
     });
@@ -175,7 +157,7 @@ export class FurnitureService {
   }
 
   private async validateSlug(input: CreateProductInput | UpdateProductInput) {
-    const data = await this.furnitureRepository.getProducts({
+    const data = await this.giftRepository.getProducts({
       'article.slug': slug(input.name),
       status: true,
       site: input.site,
@@ -188,7 +170,7 @@ export class FurnitureService {
     }
   }
   // private async validateSlugUpdate(input: UpdateProductInput) {
-  //   const data = await this.furnitureRepository.getProducts({
+  //   const data = await this.giftRepository.getProducts({
   //     'article.slug': slug(input.name),
   //     status: true,
   //     site: input.site,
@@ -204,17 +186,17 @@ export class FurnitureService {
   // }
 
   private async validateProducts(site: GetSiteArgs) {
-    const data = await this.furnitureRepository.getProducts(site);
+    const data = await this.giftRepository.getProducts(site);
     if (data.length === 0) {
       throw new NotFoundException(`No existen productos. Lindo dia :D`);
     }
   }
 
-  private toModel(furnitureDocument: FurnitureDocument): Furniture {
+  private toModel(giftDocument: GiftDocument): Gift {
     return {
-      _id: furnitureDocument._id.toHexString(),
-      article: furnitureDocument.article,
-      site: furnitureDocument.site,
+      _id: giftDocument._id.toHexString(),
+      article: giftDocument.article,
+      site: giftDocument.site,
     };
   }
 }

@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://regalosterrakota.vercel.app'],
   });
   const configService = app.get(ConfigService);
   const port = configService.get<string>('PORT');

@@ -1,26 +1,30 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Furniture } from './model';
-import { FurnitureRepository } from './repositories';
-import { FurnitureResolver } from './resolvers';
-import { FurnitureSchema } from './schema';
-import { FurnitureService } from './services';
+import { Clothing, Furniture, Gift } from './model';
+import {
+  ClothingRepository,
+  FurnitureRepository,
+  GiftRepository,
+} from './repositories';
+import { ClothingResolver, FurnitureResolver, GiftResolver } from './resolvers';
+import { ClothingSchema, FurnitureSchema, GiftSchema } from './schema';
+import { ClothingService, FurnitureService, GiftService } from './services';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      // { name: Wear.name, schema: WearSchema },
-      // { name: Gift.name, schema: GiftSchema },
+      { name: Clothing.name, schema: ClothingSchema },
+      { name: Gift.name, schema: GiftSchema },
       { name: Furniture.name, schema: FurnitureSchema },
     ]),
   ],
   providers: [
-    // WearRepository,
-    // WearService,
-    // WearResolver,
-    // GiftRepository,
-    // GiftService,
-    // GiftResolver,
+    ClothingRepository,
+    ClothingService,
+    ClothingResolver,
+    GiftRepository,
+    GiftService,
+    GiftResolver,
     FurnitureRepository,
     FurnitureService,
     FurnitureResolver,

@@ -8,7 +8,9 @@ import {
   GetSiteArgs,
 } from '../dto/args/product-args.dto';
 import {
+
   CreateProductInput,
+
   UpdateProductInput,
   UpdateSpecsInput,
   UpdateTagsInput,
@@ -18,89 +20,82 @@ import {
   UpdateDetailsInput,
 } from '../dto/input';
 import { ListInput } from '../dto/list.dto';
-import { Furniture } from '../model/furniture.model';
-import { FurnitureRepository } from '../repositories/furniture.repository';
-import { FurnitureDocument } from '../schema';
+import { Clothing } from '../model/clothing.model';
+import { ClothingRepository } from '../repositories/clothing.repository';
+import { ClothingDocument } from '../schema';
 
 @Injectable()
-export class FurnitureService {
-  constructor(private readonly furnitureRepository: FurnitureRepository) {}
+export class ClothingService {
+  constructor(private readonly clothingRepository: ClothingRepository) {}
 
-  async createFurniture(input: CreateProductInput) {
+  async createClothing(input: CreateProductInput) {
     await this.validateSlug(input);
-    const data = await this.furnitureRepository.createProduct(input);
+    const data = await this.clothingRepository.createProduct(input);
     return this.toModel(data);
   }
 
-  async updateFurniture(id: GetProductArgs, input: UpdateProductInput) {
+  async updateClothing(id: GetProductArgs, input: UpdateProductInput) {
     await this.validateProduct(id);
-    const data = await this.furnitureRepository.findOneProductAndUpdate(
+    const data = await this.clothingRepository.findOneProductAndUpdate(
       id,
       input,
     );
     return this.toModel(data);
   }
 
-  // async updateFurnitures(site: GetSiteArgs, input: UpdateFurnituresInput) {
-  //   const data = await this.furnitureRepository.updateMany(site, input);
+  // async updateClothings(site: GetSiteArgs, input: UpdateClothingsInput) {
+  //   const data = await this.clothingRepository.updateMany(site, input);
   //   return data;
   // }
 
-  async removeFurniture(id: GetProductArgs) {
+  async removeClothing(id: GetProductArgs) {
     await this.validateProduct(id);
-    await this.furnitureRepository.removeProduct(id);
+    await this.clothingRepository.removeProduct(id);
     return 'producto elmininado';
   }
 
-  async removeFurnitures(site: GetSiteArgs) {
+  async removeClothings(site: GetSiteArgs) {
     await this.validateProducts(site);
 
-    await this.furnitureRepository.removeProducts(site);
+    await this.clothingRepository.removeProducts(site);
     return 'productos elmininados';
   }
 
-  async getFurniture(id: GetProductArgs) {
-    const furnitureDocument = await this.furnitureRepository.getProduct({
+  async getClothing(id: GetProductArgs) {
+    const clothingDocument = await this.clothingRepository.getProduct({
       ...id,
       status: true,
     });
-    return this.toModel(furnitureDocument);
-  }
-  async getFurnitureBySlug(slug: string) {
-    const furnitureDocument = await this.furnitureRepository.getProduct({
-      'article.slug': slug,
-      status: true,
-    });
-    return this.toModel(furnitureDocument);
+    return this.toModel(clothingDocument);
   }
 
-  async getFurnitures(site: GetSiteArgs) {
-    return await this.furnitureRepository.getProductsSort({
+  async getClothings(site: GetSiteArgs) {
+    return await this.clothingRepository.getProductsSort({
       ...site,
       status: true,
     });
   }
 
   findAllProducts(input: ListInput, site: string) {
-    return this.furnitureRepository.findAll(
+    return this.clothingRepository.findAll(
       { status: true, site: site },
       input,
     );
   }
   findAllProductsByPagination(input: ListInput, site: string) {
-    return this.furnitureRepository.findAllPagination(
+    return this.clothingRepository.findAllPagination(
       { status: true, site: site },
       input,
     );
   }
 
   // async addSpecs(id: GetProductArgs, input: AddSpecsInput) {
-  //   const data = await this.furnitureRepository.addProductSpecs(id, input);
+  //   const data = await this.clothingRepository.addProductSpecs(id, input);
   //   return this.toModel(data);
   // }
 
   async updateImages(id: GetProductArgs, input: UpdateImagesInput[]) {
-    const document = await this.furnitureRepository.updateImageProduct(
+    const document = await this.clothingRepository.updateImageProduct(
       id,
       input,
     );
@@ -108,21 +103,21 @@ export class FurnitureService {
   }
 
   async updateTags(id: GetProductArgs, input: UpdateTagsInput[]) {
-    const document = await this.furnitureRepository.updateTagsProduct(
+    const document = await this.clothingRepository.updateTagsProduct(
       id,
       input,
     );
     return document;
   }
   async updateSpecs(id: GetProductArgs, input: UpdateSpecsInput[]) {
-    const document = await this.furnitureRepository.updateSpecsProduct(
+    const document = await this.clothingRepository.updateSpecsProduct(
       id,
       input,
     );
     return document;
   }
   async updateDetails(id: GetProductArgs, input: UpdateDetailsInput) {
-    const document = await this.furnitureRepository.updateDetailsProduct(
+    const document = await this.clothingRepository.updateDetailsProduct(
       id,
       input,
     );
@@ -132,11 +127,11 @@ export class FurnitureService {
   //TODO: articleType
 
   // async addColors(id: GetProductArgs, input: AddColorsInput) {
-  //   const document = await this.furnitureRepository.addProductColors(id, input);
+  //   const document = await this.clothingRepository.addProductColors(id, input);
   //   return document;
   // }
   async updateColors(id: GetProductArgs, input: UpdateColorsInput) {
-    const document = await this.furnitureRepository.updateProductColors(
+    const document = await this.clothingRepository.updateProductColors(
       {
         _id: id,
         ['articleType.colors.id']: input.id,
@@ -147,11 +142,11 @@ export class FurnitureService {
   }
 
   // async addSizes(id: GetProductArgs, input: AddSizesInput) {
-  //   const document = await this.furnitureRepository.addProductSizes(id, input);
+  //   const document = await this.clothingRepository.addProductSizes(id, input);
   //   return document;
   // }
   async updateSizes(id: GetProductArgs, input: UpdateSizesInput) {
-    const document = await this.furnitureRepository.updateProductSizes(
+    const document = await this.clothingRepository.updateProductSizes(
       {
         _id: id,
         ['articleType.sizes.id']: input.id,
@@ -164,7 +159,7 @@ export class FurnitureService {
   //TODO: articleType
 
   private async validateProduct(id: GetProductArgs) {
-    const data = await this.furnitureRepository.getProducts({
+    const data = await this.clothingRepository.getProducts({
       _id: id._id,
       status: true,
     });
@@ -175,7 +170,7 @@ export class FurnitureService {
   }
 
   private async validateSlug(input: CreateProductInput | UpdateProductInput) {
-    const data = await this.furnitureRepository.getProducts({
+    const data = await this.clothingRepository.getProducts({
       'article.slug': slug(input.name),
       status: true,
       site: input.site,
@@ -188,7 +183,7 @@ export class FurnitureService {
     }
   }
   // private async validateSlugUpdate(input: UpdateProductInput) {
-  //   const data = await this.furnitureRepository.getProducts({
+  //   const data = await this.clothingRepository.getProducts({
   //     'article.slug': slug(input.name),
   //     status: true,
   //     site: input.site,
@@ -204,17 +199,17 @@ export class FurnitureService {
   // }
 
   private async validateProducts(site: GetSiteArgs) {
-    const data = await this.furnitureRepository.getProducts(site);
+    const data = await this.clothingRepository.getProducts(site);
     if (data.length === 0) {
       throw new NotFoundException(`No existen productos. Lindo dia :D`);
     }
   }
 
-  private toModel(furnitureDocument: FurnitureDocument): Furniture {
+  private toModel(clothingDocument: ClothingDocument): Clothing {
     return {
-      _id: furnitureDocument._id.toHexString(),
-      article: furnitureDocument.article,
-      site: furnitureDocument.site,
+      _id: clothingDocument._id.toHexString(),
+      article: clothingDocument.article,
+      site: clothingDocument.site,
     };
   }
 }

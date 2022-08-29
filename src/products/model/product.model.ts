@@ -35,7 +35,7 @@ export class Article {
   // readonly route: Route[];
   @Field(() => Featured)
   readonly featured: Featured | string;
-  @Field(() => Detail)
+  @Field(() => Detail, { nullable: true })
   readonly details: Detail | string;
 
   @Field(() => [SpecsProduct])

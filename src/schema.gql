@@ -18,7 +18,7 @@ type Article {
   description: String!
   route: String!
   featured: Featured!
-  details: Detail!
+  details: Detail
   specs: [SpecsProduct!]!
   tags: [TagsProduct!]!
   image: [ImageProduct!]
@@ -69,6 +69,13 @@ type SpecsProduct {
   text: String!
 }
 
+type Clothing {
+  _id: ID!
+  article: Article!
+  site: String!
+  status: Boolean
+}
+
 type Furniture {
   _id: ID!
   article: Article!
@@ -76,16 +83,47 @@ type Furniture {
   status: Boolean
 }
 
+type Gift {
+  _id: ID!
+  article: Article!
+  site: String!
+  status: Boolean
+}
+
 type Query {
+  clothing(_id: ID!): Clothing!
+  clothings(site: String!): [Clothing!]!
+  gift(_id: ID!): Gift!
+  giftBySlug(slug: String!): Gift!
+  gifts(site: String!): [Gift!]!
   furniture(_id: ID!): Furniture!
+  furnitureBySlug(slug: String!): Furniture!
   furnitures(site: String!): [Furniture!]!
 }
 
 type Mutation {
+  addClothing(input: CreateProductInput!): Clothing!
+  updateClothing(_id: ID!, input: UpdateProductInput!): Clothing!
+  removeClothing(_id: ID!): String!
+  removeFurnituries(site: String!): String!
+  updateImagesClothing(_id: ID!, input: [UpdateImagesInput!]!): Clothing!
+  updateSpecsClothing(_id: ID!, input: [UpdateSpecsInput!]!): Clothing!
+  updateTagsClothing(_id: ID!, input: [UpdateTagsInput!]!): Clothing!
+  updateDetailsClothing(_id: ID!, input: UpdateDetailsInput!): Clothing!
+  updateColorsClothing(_id: ID!, input: UpdateColorsInput!): Clothing!
+  updateSizesClothing(_id: ID!, input: UpdateSizesInput!): Clothing!
+  addGift(input: CreateProductInput!): Gift!
+  updateGift(_id: ID!, input: UpdateProductInput!): Gift!
+  removeGift(_id: ID!): String!
+  updateImagesGift(_id: ID!, input: [UpdateImagesInput!]!): Gift!
+  updateSpecsGift(_id: ID!, input: [UpdateSpecsInput!]!): Gift!
+  updateTagsGift(_id: ID!, input: [UpdateTagsInput!]!): Gift!
+  updateDetailsGift(_id: ID!, input: UpdateDetailsInput!): Gift!
+  updateColorsGift(_id: ID!, input: UpdateColorsInput!): Gift!
+  updateSizesGift(_id: ID!, input: UpdateSizesInput!): Gift!
   addFurniture(input: CreateProductInput!): Furniture!
   updateFurniture(_id: ID!, input: UpdateProductInput!): Furniture!
   removeFurniture(_id: ID!): String!
-  removeFurnituries(site: String!): String!
   updateImagesFurniture(_id: ID!, input: [UpdateImagesInput!]!): Furniture!
   updateSpecsFurniture(_id: ID!, input: [UpdateSpecsInput!]!): Furniture!
   updateTagsFurniture(_id: ID!, input: [UpdateTagsInput!]!): Furniture!

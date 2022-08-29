@@ -58,6 +58,10 @@ export class FurnitureResolver {
   async getFurniture(@Args() id: GetFurnitureArgs) {
     return this.furnitureService.getFurniture(id);
   }
+  @Query(() => Furniture, { name: 'furnitureBySlug' })
+  async getFurnitureBySlug(@Args('slug') slug: string) {
+    return this.furnitureService.getFurnitureBySlug(slug);
+  }
 
   @Query(() => [Furniture], { name: 'furnitures' })
   async getFurnitures(@Args() site: GetSiteArgs) {
