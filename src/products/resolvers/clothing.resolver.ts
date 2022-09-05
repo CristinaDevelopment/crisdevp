@@ -8,13 +8,10 @@ import {
 import {
   CreateProductInput,
   UpdateProductInput,
-
   UpdateSpecsInput,
   UpdateTagsInput,
-
   UpdateColorsInput,
   UpdateSizesInput,
-
   UpdateImagesInput,
   UpdateDetailsInput,
 } from '../dto/input/product.input';
@@ -59,9 +56,21 @@ export class ClothingResolver {
     return this.clothingService.getClothing(id);
   }
 
+  @Query(() => Clothing, { name: 'clothingBySlug' })
+  async getClothingBySlug(
+    @Args('slug') slug: string,
+    @Args('site') site: string,
+  ) {
+    return this.clothingService.getClothingBySlug(slug, site);
+  }
+
   @Query(() => [Clothing], { name: 'clothings' })
   async getClothings(@Args() site: GetSiteArgs) {
     return this.clothingService.getClothings(site);
+  }
+  @Query(() => [Clothing], { name: 'allClothings' })
+  async clothings() {
+    return this.clothingService.clothings();
   }
 
   // async findAllWithCursor(
@@ -112,7 +121,7 @@ export class ClothingResolver {
   @Mutation(() => Clothing, { name: 'updateDetailsClothing' })
   updateDetailsClothing(
     @Args() id: GetClothingArgs,
-    @Args('input', { type: () => UpdateDetailsInput})
+    @Args('input', { type: () => UpdateDetailsInput })
     input: UpdateDetailsInput,
   ) {
     return this.clothingService.updateDetails(id, input);

@@ -106,19 +106,25 @@ type Teddy {
 
 type Query {
   clothing(_id: ID!): Clothing!
+  clothingBySlug(slug: String!, site: String!): Clothing!
   clothings(site: String!): [Clothing!]!
+  allClothings: [Clothing!]!
   gift(_id: ID!): Gift!
-  giftBySlug(slug: String!): Gift!
+  giftBySlug(slug: String!, site: String!): Gift!
   gifts(site: String!): [Gift!]!
+  allGifts: [Gift!]!
   furniture(_id: ID!): Furniture!
-  furnitureBySlug(slug: String!): Furniture!
+  furnitureBySlug(slug: String!, site: String!): Furniture!
   furnitures(site: String!): [Furniture!]!
+  allFurnitures: [Furniture!]!
   jeweler(_id: ID!): Jeweler!
-  jewelerBySlug(slug: String!): Jeweler!
+  jewelerBySlug(slug: String!, site: String!): Jeweler!
   jewelers(site: String!): [Jeweler!]!
+  allJewelers: [Jeweler!]!
   teddy(_id: ID!): Teddy!
-  teddyBySlug(slug: String!): Teddy!
+  teddyBySlug(slug: String!, site: String!): Teddy!
   teddys(site: String!): [Teddy!]!
+  allTeddys: [Teddy!]!
 }
 
 type Mutation {

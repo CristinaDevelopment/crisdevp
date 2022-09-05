@@ -59,15 +59,18 @@ export class GiftResolver {
     return this.giftService.getGift(id);
   }
   @Query(() => Gift, { name: 'giftBySlug' })
-  async getGiftBySlug(@Args('slug') slug: string) {
-    return this.giftService.getGiftBySlug(slug);
+  async getGiftBySlug(@Args('slug') slug: string, @Args('site') site: string,) {
+    return this.giftService.getGiftBySlug(slug, site);
   }
 
   @Query(() => [Gift], { name: 'gifts' })
   async getGifts(@Args() site: GetSiteArgs) {
     return this.giftService.getGifts(site);
   }
-
+  @Query(() => [Gift], { name: 'allGifts' })
+  async gifts() {
+    return this.giftService.gifts();
+  }
   // async findAllWithCursor(
   //   @Args('args') args: ConnectionArgs,
   //   @Args('site') site: string,

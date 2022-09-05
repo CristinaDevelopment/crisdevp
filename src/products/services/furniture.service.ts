@@ -66,9 +66,10 @@ export class FurnitureService {
     });
     return this.toModel(furnitureDocument);
   }
-  async getFurnitureBySlug(slug: string) {
+  async getFurnitureBySlug(slug: string, site: string) {
     const furnitureDocument = await this.furnitureRepository.getProduct({
       'article.slug': slug,
+      site: site,
       status: true,
     });
     return this.toModel(furnitureDocument);
@@ -80,7 +81,9 @@ export class FurnitureService {
       status: true,
     });
   }
-
+  async furnitures() {
+    return await this.furnitureRepository.getProducts({});
+  }
   findAllProducts(input: ListInput, site: string) {
     return this.furnitureRepository.findAll(
       { status: true, site: site },

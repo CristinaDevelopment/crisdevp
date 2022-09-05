@@ -63,9 +63,10 @@ export class TeddyService {
     });
     return this.toModel(teddyDocument);
   }
-  async getTeddyBySlug(slug: string) {
+  async getTeddyBySlug(slug: string, site: string) {
     const teddyDocument = await this.teddyRepository.getProduct({
       'article.slug': slug,
+      site: site,
       status: true,
     });
     return this.toModel(teddyDocument);
@@ -76,6 +77,10 @@ export class TeddyService {
       ...site,
       status: true,
     });
+  }
+
+  async teddys() {
+    return await this.teddyRepository.getProducts({});
   }
 
   findAllProducts(input: ListInput, site: string) {

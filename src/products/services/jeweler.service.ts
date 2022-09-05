@@ -63,9 +63,10 @@ export class JewelerService {
     });
     return this.toModel(jewelerDocument);
   }
-  async getJewelerBySlug(slug: string) {
+  async getJewelerBySlug(slug: string, site: string) {
     const jewelerDocument = await this.jewelerRepository.getProduct({
       'article.slug': slug,
+      site: site,
       status: true,
     });
     return this.toModel(jewelerDocument);
@@ -76,6 +77,10 @@ export class JewelerService {
       ...site,
       status: true,
     });
+  }
+
+  async jewelers() {
+    return await this.jewelerRepository.getProducts({});
   }
 
   findAllProducts(input: ListInput, site: string) {

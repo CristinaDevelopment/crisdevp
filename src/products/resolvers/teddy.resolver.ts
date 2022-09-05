@@ -59,13 +59,18 @@ export class TeddyResolver {
     return this.teddyService.getTeddy(id);
   }
   @Query(() => Teddy, { name: 'teddyBySlug' })
-  async getTeddyBySlug(@Args('slug') slug: string) {
-    return this.teddyService.getTeddyBySlug(slug);
+  async getTeddyBySlug(@Args('slug') slug: string, @Args('site') site: string,) {
+    return this.teddyService.getTeddyBySlug(slug, site);
   }
 
   @Query(() => [Teddy], { name: 'teddys' })
   async getTeddys(@Args() site: GetSiteArgs) {
     return this.teddyService.getTeddys(site);
+  }
+
+  @Query(() => [Teddy], { name: 'allTeddys' })
+  async teddys() {
+    return this.teddyService.teddys();
   }
 
   // async findAllWithCursor(

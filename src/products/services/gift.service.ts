@@ -63,9 +63,10 @@ export class GiftService {
     });
     return this.toModel(giftDocument);
   }
-  async getGiftBySlug(slug: string) {
+  async getGiftBySlug(slug: string, site: string) {
     const giftDocument = await this.giftRepository.getProduct({
       'article.slug': slug,
+      site: site,
       status: true,
     });
     return this.toModel(giftDocument);
@@ -76,6 +77,10 @@ export class GiftService {
       ...site,
       status: true,
     });
+  }
+
+  async gifts() {
+    return await this.giftRepository.getProducts({});
   }
 
   findAllProducts(input: ListInput, site: string) {

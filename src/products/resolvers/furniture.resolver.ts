@@ -59,15 +59,18 @@ export class FurnitureResolver {
     return this.furnitureService.getFurniture(id);
   }
   @Query(() => Furniture, { name: 'furnitureBySlug' })
-  async getFurnitureBySlug(@Args('slug') slug: string) {
-    return this.furnitureService.getFurnitureBySlug(slug);
+  async getFurnitureBySlug(@Args('slug') slug: string, @Args('site') site: string,) {
+    return this.furnitureService.getFurnitureBySlug(slug, site);
   }
 
   @Query(() => [Furniture], { name: 'furnitures' })
   async getFurnitures(@Args() site: GetSiteArgs) {
     return this.furnitureService.getFurnitures(site);
   }
-
+  @Query(() => [Furniture], { name: 'allFurnitures' })
+  async furnitures() {
+    return this.furnitureService.furnitures();
+  }
   // async findAllWithCursor(
   //   @Args('args') args: ConnectionArgs,
   //   @Args('site') site: string,

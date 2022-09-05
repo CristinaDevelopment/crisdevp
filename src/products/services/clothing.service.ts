@@ -8,9 +8,7 @@ import {
   GetSiteArgs,
 } from '../dto/args/product-args.dto';
 import {
-
   CreateProductInput,
-
   UpdateProductInput,
   UpdateSpecsInput,
   UpdateTagsInput,
@@ -68,6 +66,14 @@ export class ClothingService {
     });
     return this.toModel(clothingDocument);
   }
+  async getClothingBySlug(slug: string, site: string) {
+    const clothingDocument = await this.clothingRepository.getProduct({
+      'article.slug': slug,
+      site: site,
+      status: true,
+    });
+    return this.toModel(clothingDocument);
+  }
 
   async getClothings(site: GetSiteArgs) {
     return await this.clothingRepository.getProductsSort({
@@ -75,12 +81,12 @@ export class ClothingService {
       status: true,
     });
   }
+  async clothings() {
+    return await this.clothingRepository.getProducts({});
+  }
 
   findAllProducts(input: ListInput, site: string) {
-    return this.clothingRepository.findAll(
-      { status: true, site: site },
-      input,
-    );
+    return this.clothingRepository.findAll({ status: true, site: site }, input);
   }
   findAllProductsByPagination(input: ListInput, site: string) {
     return this.clothingRepository.findAllPagination(
@@ -103,10 +109,7 @@ export class ClothingService {
   }
 
   async updateTags(id: GetProductArgs, input: UpdateTagsInput[]) {
-    const document = await this.clothingRepository.updateTagsProduct(
-      id,
-      input,
-    );
+    const document = await this.clothingRepository.updateTagsProduct(id, input);
     return document;
   }
   async updateSpecs(id: GetProductArgs, input: UpdateSpecsInput[]) {

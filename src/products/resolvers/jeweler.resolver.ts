@@ -59,8 +59,8 @@ export class JewelerResolver {
     return this.jewelerService.getJeweler(id);
   }
   @Query(() => Jeweler, { name: 'jewelerBySlug' })
-  async getJewelerBySlug(@Args('slug') slug: string) {
-    return this.jewelerService.getJewelerBySlug(slug);
+  async getJewelerBySlug(@Args('slug') slug: string, @Args('site') site: string,) {
+    return this.jewelerService.getJewelerBySlug(slug, site);
   }
 
   @Query(() => [Jeweler], { name: 'jewelers' })
@@ -68,6 +68,10 @@ export class JewelerResolver {
     return this.jewelerService.getJewelers(site);
   }
 
+  @Query(() => [Jeweler], { name: 'allJewelers' })
+  async jewelers() {
+    return this.jewelerService.jewelers();
+  }
   // async findAllWithCursor(
   //   @Args('args') args: ConnectionArgs,
   //   @Args('site') site: string,
